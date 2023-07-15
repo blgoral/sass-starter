@@ -1,10 +1,9 @@
 var gulp = require("gulp"),
-    sass = require("gulp-sass"),
+    sass = require("gulp-sass")(require("sass")),
     postcss = require("gulp-postcss"),
-    unprefix = require("postcss-unprefix"),
     autoprefixer = require("autoprefixer"),
     // cssnano = require("cssnano"),
-    // sourcemaps = require("gulp-sourcemaps"),
+    sourcemaps = require("gulp-sourcemaps"),
     browserSync = require("browser-sync").create();
 
 var paths = {
@@ -24,8 +23,8 @@ function style() {
             // .pipe(sourcemaps.init())
             .pipe(sass({outputStyle: 'expanded'}))
             .on("error", sass.logError)
-            .pipe(postcss([unprefix(), autoprefixer()]))
-            // .pipe(sourcemaps.write())
+            .pipe(postcss([autoprefixer()]))
+            .pipe(sourcemaps.write())
             .pipe(gulp.dest(paths.styles.dest))
             // Add browsersync stream pipe after compilation
             .pipe(browserSync.stream())
